@@ -6,16 +6,14 @@ class AricleList extends Component {
         return (
             <div>
                 <ul>
-                    {this.getList()}
+                    { this.renderItems() }
                 </ul>
             </div>
         )
     }
 
-    getList() {
-        return this.props.articles.map((article, index) =>
-            <li key={article.id}><Article article = {article} /></li>
-        )
+    renderItems() {
+        return this.props.articles.map(a => <li key={ a.id }><Article article = { a } /></li>)
     }
 }
 

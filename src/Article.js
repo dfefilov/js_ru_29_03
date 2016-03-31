@@ -1,26 +1,29 @@
 import React, { Component, PropTypes } from 'react'
+import CommentList from './CommentList'
 
 class Article extends Component {
-
-    state = {
-        isOpen: false
-    }
+    state = { visible: false };
 
     render() {
-        const { title, text} = this.props.article
-        const body = this.state.isOpen ? <section>{text}</section> : null
+        const { title, text, comments } = this.props.article;
+        const body = this.state.visible ?
+            (
+                <section>
+                    { text }
+                    <CommentList items = { comments } />
+                </section>
+            ) : null;
+
         return (
             <div>
-                <h3 onClick = {this.handleClick}>{title}</h3>
-                {body}
+                <h3 onClick = { this.onTitleClick }>{ title }</h3>
+                { body }
             </div>
         )
     }
 
-    handleClick = (ev) => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
+    onTitleClick = (event) => {
+        this.setState({ visible: !this.state.visible })
     }
 }
 
