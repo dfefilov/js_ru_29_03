@@ -3,7 +3,6 @@ import Article from './Article'
 
 class AricleList extends Component {
     state = {
-        expandedArticles: [],
         selectedArticles: []
     };
 
@@ -16,13 +15,15 @@ class AricleList extends Component {
     }
 
     getList() {
+        const { expandedItem } = this.props;
+
         return this.props.articles.map((a) => {
             return (
                 <li key={ a.id }>
                     <Article
                         article={ a }
                         expandArticle={ this.expandArticle }
-                        expanded={ this.state.expandedArticles.includes(a.id) }
+                        expanded={ a.id == expandedItem }
                         selectArticle={ this.selectArticle }
                         selected={ this.state.selectedArticles.includes(a.id) }
                     />
@@ -32,7 +33,9 @@ class AricleList extends Component {
     }
 
     expandArticle = (id) => {
-        this.setState({ expandedArticles: [id] });
+        const { expandItem } = this.props;
+
+        expandItem(id);
     };
 
     selectArticle = (id) => {
@@ -45,4 +48,4 @@ class AricleList extends Component {
     };
 }
 
-export default AricleList
+export default Accordion(AricleList)
