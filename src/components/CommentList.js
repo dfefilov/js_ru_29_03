@@ -6,22 +6,26 @@ class CommentList extends Component {
     render() {
         return (
             <div>
-                {this.getLink()}
-                {this.getBody()}
+                { this.getLink() }
+                { this.getBody() }
             </div>
         )
     }
 
     getLink() {
-        const text = this.props.isOpen ? 'close comments' : 'open comments'
+        const text = this.props.isOpen ? 'close comments' : 'open comments';
+
         return <a href="#" onClick = {this.props.toggleOpen}>{text}</a>
     }
 
     getBody() {
-        const { comments } = this.props
-        if (!this.props.isOpen || !comments) return null
-        const commetItems = comments.map(comment => <li key={comment.id}><Comment comment = {comment}/></li>)
-        return <ul>{commetItems}</ul>
+        const { comments } = this.props;
+
+        if (!this.props.isOpen || !comments) return null;
+
+        const commetItems = comments.map(c => <li key={ c.id }><Comment comment = { c }/></li>);
+
+        return <ul>{ commetItems }</ul>
     }
 }
 
