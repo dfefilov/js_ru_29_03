@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react'
+import Accordion from '../HOC/Accordion'
 import Article from './Article'
 
 class AricleList extends Component {
-    state = {
-        selectedArticles: []
-    };
+    state = { selectedArticles: [] };
 
     render() {
         return (
