@@ -4,13 +4,22 @@ import CommentList from './CommentList'
 import { findDOMNode } from 'react-dom'
 
 class Article extends Component {
+    static propTypes = {
+        article: PropTypes.object.isRequired,
+        isOpen: React.PropTypes.bool,
+        isSelected: React.PropTypes.bool,
+        addComment: PropTypes.func.isRequired,
+        deleteArticle: PropTypes.func.isRequired,
+        expandArticle: PropTypes.func.isRequired,
+        selectArticle: PropTypes.func.isRequired
+    }
 
     render() {
-        const { article: { title }, isSelected, openItem, deleteArticle } = this.props
+        const { article: { title }, isSelected, expandArticle, deleteArticle } = this.props
         const style = isSelected ? {color: 'red'} : null
         return (
             <div ref = "articleContainer">
-                <h3 onClick = {openItem} style = {style}>{title}</h3>
+                <h3 onClick = {expandArticle} style = {style}>{title}</h3>
                 <a href = "#" onClick = {this.handleSelect}>select this article</a> | <a href = "#" onClick = {this.deleteArticle}>delete this article</a>
                 { this.getBody() }
             </div>
