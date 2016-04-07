@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import CommentAdd from './CommentAdd'
 import CommentList from './CommentList'
 import { findDOMNode } from 'react-dom'
 
@@ -10,17 +11,23 @@ class Article extends Component {
         return (
             <div ref = "articleContainer">
                 <h3 onClick = {openItem} style = {style}>{title}</h3>
-                <a href = "#" onClick = {this.handleSelect}>select this article</a> |
-                <a href = "#" onClick = {this.deleteArticle}>delete this article</a>
-                {this.getBody()}
+                <a href = "#" onClick = {this.handleSelect}>select this article</a> | <a href = "#" onClick = {this.deleteArticle}>delete this article</a>
+                { this.getBody() }
             </div>
         )
     }
 
+    addComment = (comment) => {
+        const { article: { id } } = this.props;
+
+        this.props.addComment(id, comment);
+    };
+
     deleteArticle = (ev) => {
-        ev.preventDefault()
+        ev.preventDefault();
+
         this.props.deleteArticle(this.props.article.id)
-    }
+    };
 
     componentDidMount() {
 /*
@@ -39,8 +46,10 @@ class Article extends Component {
         const { article } = this.props
         return (
             <section>
-                {article.text}
-                <CommentList comments = {article.getRelation('comments')} ref = "commentList" />
+                <p>{ article.text }</p>
+                <CommentAdd add = { this.addComment } />
+                <br/>
+                <CommentList comments = { article.getRelation('comments') } ref = "commentList" />
             </section>
         )
     }
