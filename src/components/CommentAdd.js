@@ -20,6 +20,7 @@ class CommentAdd extends Component {
         var author = this.refs.author, text = this.refs.text;
 
         if (text.value) {
+            //не очень хорошая практика использовать store в глубоких компонентах
             this.props.add({ id: commentStore.generateId(), name: author.value, text: text.value });
 
             author.value = text.value = "";
