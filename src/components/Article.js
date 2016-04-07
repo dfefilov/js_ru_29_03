@@ -1,55 +1,58 @@
 import React, { Component, PropTypes } from 'react'
+import CommentAdd from './CommentAdd'
 import CommentList from './CommentList'
-// import { findDOMNode } from 'react-dom'
-// import toggleOpen from '../HOC/toggleOpen'
+import { findDOMNode } from 'react-dom'
 
 class Article extends Component {
-    render() {
-        const { article: { title }, selected } = this.props;
-        const style = selected ? { color: 'red' } : null;
 
+    render() {
+        const { article: { title }, isSelected, openItem, deleteArticle } = this.props
+        const style = isSelected ? {color: 'red'} : null
         return (
             <div ref = "articleContainer">
-                <h3 onClick = { this.handleClick } style = { style }>{ title }</h3>
-                <a href = "#" onClick = { this.handleSelect }>select this article</a>
+                <h3 onClick = {openItem} style = {style}>{title}</h3>
+                <a href = "#" onClick = {this.handleSelect}>select this article</a> | <a href = "#" onClick = {this.deleteArticle}>delete this article</a>
                 { this.getBody() }
             </div>
         )
     }
 
-    /*
+    addComment = (comment) => {
+        const { article: { id } } = this.props;
+
+        this.props.addComment(id, comment);
+    };
+
+    deleteArticle = (ev) => {
+        ev.preventDefault();
+
+        this.props.deleteArticle(this.props.article.id)
+    };
+
     componentDidMount() {
+/*
         console.log('---', this.refs);
         console.log('---', 'commentList: ', this.refs.commentList, findDOMNode(this.refs.commentList));
+*/
     }
-     */
-
-    getBody() {
-        const { article, expanded } = this.props;
-
-        return expanded ?
-            (
-                <section>
-                    { article.text }
-                    <CommentList comments = { article.comments } ref = "commentList" />
-                </section>
-            ) : null;
-    }
-
-    handleClick = (ev) => {
-        const { article: { id }, expandArticle } = this.props;
-
-        // this.props.toggleOpen();
-
-        expandArticle(id);
-    };
 
     handleSelect = (ev) => {
-        const { article: { id }, selectArticle } = this.props;
+        const { article: {id}, selectArticle } = this.props
+        selectArticle(id)
+    }
 
-        selectArticle(id);
-    };
+    getBody() {
+        if (!this.props.isOpen) return null
+        const { article } = this.props
+        return (
+            <section>
+                <p>{ article.text }</p>
+                <CommentAdd add = { this.addComment } />
+                <br/>
+                <CommentList comments = { article.getRelation('comments') } ref = "commentList" />
+            </section>
+        )
+    }
 }
 
-// export default toggleOpen(Article)
 export default Article
