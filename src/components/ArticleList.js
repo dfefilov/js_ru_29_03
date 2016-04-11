@@ -28,10 +28,11 @@ class AricleList extends Component {
             <li key={article.id}>
                 <Article
                     article = {article}
-                    openItem = {openItem(article.id)}
                     isOpen = {isOpen(article.id)}
-                    deleteArticle = {this.props.deleteArticle}
                     isSelected = {this.state.selectedArticles.includes(article.id)}
+                    deleteArticle = {this.props.deleteArticle}
+                    expandArticle = {openItem(article.id)}
+                    loadOneArticle = { this.props.loadOneArticle }
                     selectArticle = {this.selectArticle}
                 />
             </li>

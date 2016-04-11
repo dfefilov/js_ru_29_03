@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher'
 import SimpleStore from './SimpleStore'
-import { DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, START, SUCCESS, FAIL } from '../constants'
+import { DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_ONE_ARTICLE, START, SUCCESS, FAIL } from '../constants'
 
 class ArticleStore extends SimpleStore {
     constructor(...args) {
@@ -29,6 +29,14 @@ class ArticleStore extends SimpleStore {
                     break;
 
                 case LOAD_ALL_ARTICLES + FAIL:
+                    this.error = error
+                    break;
+
+                case LOAD_ONE_ARTICLE + SUCCESS:
+                    this.__add(response)
+                    break;
+
+                case LOAD_ONE_ARTICLE + FAIL:
                     this.error = error
                     break;
 
